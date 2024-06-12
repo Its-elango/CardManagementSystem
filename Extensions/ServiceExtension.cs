@@ -1,5 +1,6 @@
 ﻿using CardManagementSystem.Repository;
 using CardManagementSystem.Repository.Interface;
+using CardManagementSystem.Service;
 
 namespace CardManagementSystem.Extensions
 {
@@ -12,10 +13,12 @@ namespace CardManagementSystem.Extensions
             return services;
         }
 
-        public static IServiceCollection RegisterClientApi(this IServiceCollection services)
+        public static IServiceCollection RegisterClientService(this IServiceCollection services)
         {
             services.AddHttpClient();
-            //services.AddTransient<InvokeApi>();
+            services.AddTransient<InvokeApi>();
+            services.AddTransient<EmailService>();
+
             return services;
         }
     }

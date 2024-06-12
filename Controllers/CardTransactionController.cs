@@ -1,5 +1,6 @@
 ﻿using CardManagementSystem.Models;
 using CardManagementSystem.Repository.Interface;
+using CardManagementSystem.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Transactions;
@@ -11,11 +12,19 @@ namespace CardManagementSystem.Controllers
     public class CardTransactionController : ControllerBase
     {
         private readonly ICardTransaction _cardTransaction;
+        private readonly EmailService _emailService;
+        private readonly InvokeApi _invokeApi;
+        private readonly IConfiguration _configuration;
 
-        public CardTransactionController(ICardTransaction cardTransaction)
+        public CardTransactionController(ICardTransaction cardTransaction, EmailService emailService, IConfiguration configuration,InvokeApi invokeApi)
         {
+            _invokeApi = invokeApi;
             _cardTransaction = cardTransaction;
+            _emailService = emailService;
+            _configuration = configuration;
         }
+
+
 
         #region GET Methods
 
@@ -51,7 +60,18 @@ namespace CardManagementSystem.Controllers
         [HttpPost("CreateCard")]
         public async Task<IActionResult> CreateCard([FromBody] Card card)
         {
-            return Ok(await _cardTransaction.CreateCard(card));
+            var baseUrl = _configuration["Client:ClientBaseUrl"]??"";
+            var result=await _cardTransaction.CreateCard(card);
+            if(result== "Card created successfully.")
+            {
+                //await _invokeApi.SendDeliveryDetails(baseUrl,"Admin",card);
+               await _emailService.SendMail(card, "Your Card Has Been Successfully Generated!");
+                return Ok("Card created successfully");
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
 
         [HttpPost("CreateCustomer")]

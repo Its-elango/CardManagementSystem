@@ -57,7 +57,7 @@ namespace CardManagementSystem.Repository
                     command.Parameters.AddWithValue("@CustomerId", customer.CustomerId);
                     command.Parameters.AddWithValue("@Name", customer.Name);
                     command.Parameters.AddWithValue("@Email", customer.Email);
-                    command.Parameters.AddWithValue("@DateOfBirth", customer.DateOfBirth);
+                    command.Parameters.AddWithValue("@Age", customer.Age);
                     command.Parameters.AddWithValue("@Address", customer.Address);
                     command.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
 
@@ -228,7 +228,7 @@ namespace CardManagementSystem.Repository
                                 CustomerId = Convert.ToInt32(reader["CustomerId"]),
                                 Name = Convert.ToString(reader["Name"]),
                                 Email = Convert.ToString(reader["Email"]),
-                                DateOfBirth = Convert.ToDateTime(reader["DateOfBirth"]),
+                                Age = Convert.ToInt32(reader["Age"]),
                                 Address = Convert.ToString(reader["Address"]),
                                 PhoneNumber = Convert.ToString(reader["PhoneNumber"]),
                             }
@@ -321,7 +321,7 @@ namespace CardManagementSystem.Repository
                     command.Parameters.AddWithValue("@CustomerId", customer.CustomerId);
                     command.Parameters.AddWithValue("@Name", customer.Name);
                     command.Parameters.AddWithValue("@Email", customer.Email);
-                    command.Parameters.AddWithValue("@DateOfBirth", customer.DateOfBirth);
+                    command.Parameters.AddWithValue("@Age", customer.Age);
                     command.Parameters.AddWithValue("@Address", customer.Address);
                     command.Parameters.AddWithValue("@PhoneNumber", customer.PhoneNumber);
 

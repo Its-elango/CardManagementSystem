@@ -13,12 +13,12 @@ namespace CardManagementSystem.Service
             _httpClient = httpClient;
         }
 
-        public async Task<string> SendDeliveryDetails<T>(string baseUrl, T model)
+        public async Task<string> SendDeliveryDetails<T>(string baseUrl,string path, T model)
         {
             var json = JsonConvert.SerializeObject(model);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{baseUrl}/Order/", content);
+            var response = await _httpClient.PostAsync($"{baseUrl}/{path}/",content);
 
             if (response.IsSuccessStatusCode)
             {
